@@ -57,8 +57,15 @@ img {
   font-family: "Montserrat", system-ui, serif;
   font-size: var(--fontsize__textpreset2);
   font-weight: 700;
+  transition: all;
+  transition-duration: 300ms;
 }
 
 .button::before {
   content: url(../public/images/icon-cart.svg);
+}
+
+.button:hover {
+  background: var(--color__green700);
+  cursor: pointer;
 }
