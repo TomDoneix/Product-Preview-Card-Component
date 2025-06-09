@@ -1,79 +1,411 @@
-/* Box sizing rules */
+@charset "UTF-8";
+/* -------------------/*
+ * Reset CSS "Bretzel"
+ * Made par Alsacréations
+ * Consignes : à placer dans un layer `reset` sous les autres layers
+ /* ------------------ */
+/* On adopte les couleurs système afin de s'adapter automatiquement en dark et light mode */
+:root {
+  color-scheme: light dark;
+}
+
+/* On passe tout le monde en modèle border-box et on évite min-width: auto sur les flex- et grid-items */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  min-width: 0;
 }
 
-/* Prevent font size inflation */
+/* On prévoit une petite marge au-dessus des ancres ciblées */
+:target {
+  scroll-margin-block: 1rem;
+}
+
+/* On évite les débordements de page et les zooms non désirés en landscape */
 html {
-  -moz-text-size-adjust: none;
-  -webkit-text-size-adjust: none;
+  overflow-wrap: break-word;
   text-size-adjust: none;
 }
 
-/* Remove default margin in favour of better control in authored CSS */
-body, h1, h2, h3, h4, p,
-figure, blockquote, dl, dd {
-  margin-block-end: 0;
-}
-
-/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role=list],
-ol[role=list] {
-  list-style: none;
-}
-
-/* Set core body defaults */
+/* On donne à body toute la hauteur + styles divers */
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  font-family: system-ui, sans-serif;
   line-height: 1.5;
+  text-rendering: optimizespeed;
 }
 
-/* Set shorter line heights on headings and interactive elements */
-h1, h2, h3, h4,
-button, input, label {
-  line-height: 1.1;
+/* On supprime les styles des listes ayant une class (version accessible) */
+:where(ol, ul)[class] {
+  padding-left: 0;
+}
+:where(ol, ul)[class] > li::marker {
+  content: "";
 }
 
-/* Balance text wrapping on headings */
-h1, h2,
-h3, h4 {
+/* On évite les débordements d'éléments */
+img,
+table,
+td,
+blockquote,
+pre,
+code,
+input,
+textarea,
+select,
+video,
+svg,
+iframe {
+  max-width: 100%;
+}
+
+/* On réduit de la hauteur de ligne sur certains éléments */
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+  line-height: 1;
+  margin: 0;
+}
+
+/* On améliore la typographie */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
   text-wrap: balance;
 }
 
-/* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-  color: currentColor;
+p,
+li,
+figcaption {
+  text-wrap: pretty;
+  margin: 0;
 }
 
-/* Make images easier to work with */
+q {
+  quotes: "« " " »";
+}
+
+/* On préserve le ratio d'affichage */
+iframe,
 img,
-picture {
-  max-width: 100%;
+input,
+select,
+textarea {
+  height: auto;
+}
+
+/* On stylise par défaut des liens */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* On supprime les marges */
+figure {
+  margin: 0;
+}
+
+/* On change ces éléments en block */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
   display: block;
 }
 
-/* Inherit fonts for inputs and buttons */
-input, button,
-textarea, select {
+/* On stylise les formulaires */
+input,
+button,
+textarea,
+select {
+  margin: 0;
+  background-color: transparent;
+  color: inherit;
   font-family: inherit;
   font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  vertical-align: middle;
 }
 
-/* Make sure textareas without a rows attribute are not tiny */
-textarea:not([rows]) {
-  min-height: 10em;
+form,
+fieldset {
+  border: none;
 }
 
-/* Anything that has been anchored to should have extra scroll margin */
-:target {
-  scroll-margin-block: 5ex;
+fieldset {
+  margin: 0;
+  padding: 1em;
+}
+
+legend {
+  max-width: 100%;
+  border: 0;
+  color: inherit;
+  white-space: normal;
+}
+
+label {
+  display: inline-block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  white-space: pre-wrap;
+  resize: vertical;
+}
+
+/* On stylise les éléments préformatés */
+pre,
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+pre {
+  overflow: auto;
+  line-height: normal;
+  white-space: pre-wrap;
+  tab-size: 2;
+}
+
+/* On stylise les SVG */
+svg:not([fill]) {
+  fill: currentcolor;
+}
+
+svg {
+  overflow: visible;
+}
+
+svg * {
+  transform-box: fill-box;
+}
+
+svg:has(symbol) {
+  display: none;
+}
+
+/* On corrige des styles ARIA */
+[aria-busy=true] {
+  cursor: progress;
+}
+
+[aria-controls] {
+  cursor: pointer;
+}
+
+[aria-disabled=true],
+[disabled] {
+  cursor: not-allowed;
+}
+
+[aria-hidden=false][hidden] {
+  display: revert;
+}
+
+[aria-hidden=false][hidden]:not(:focus) {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* On désactive les animations selon les préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    animation-duration: 1ms !important;
+    animation-delay: -1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+  }
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url(../../font/Fraunces/static/Fraunces_72pt_Soft-Bold.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("../../font/Montserrat/Montserrat-VariableFont_wght.ttf");
+}
+:root {
+  --color__green500: #3d8168;
+  --color__grey: #6c7289;
+  --color__black: #1c232b;
+  --color__green700: #1a4032;
+  --color__cream: #f2eae2;
+  --color__white: #ffffff;
+  --fontsize__textpreset1: 2rem;
+  --fontsize__textpreset2: 0.875rem;
+  --fontsize__textpreset3: 0.875rem;
+  --fontsize__textpreset4: 0.75rem;
+  --fontsize__textpreset5: 0.8125rem;
+  --spacing__50: 0.25rem;
+  --spacing__100: 0.5rem;
+  --spacing__150: 0.75rem;
+  --spacing__200: 1rem;
+  --spacing__300: 1.5rem;
+  --spacing__400: 2rem;
+  --spacing__500: 2.5rem;
 }
 
 body {
-  background: lightcoral;
+  padding: 5rem var(--spacing__150) 10.25rem;
+  background: var(--color__cream);
+}
+
+h2 {
+  font-size: var(--fontsize__textpreset3);
+  font-weight: 500;
+}
+
+@media screen and (min-width: 37.5rem) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  h2 {
+    font-size: var(--fontsize__textpreset4);
+    letter-spacing: 0.3125rem;
+    font-weight: 500;
+  }
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: var(--spacing__300);
+  padding: var(--spacing__400);
+  background: var(--color__white);
+  border-end-end-radius: var(--spacing__100);
+  border-end-start-radius: var(--spacing__100);
+}
+
+img {
+  min-height: 100%;
+  object-fit: cover;
+  border-start-start-radius: var(--spacing__100);
+  border-start-end-radius: var(--spacing__100);
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing__200);
+}
+
+@media (min-width: 37.5rem) {
+  main {
+    display: flex;
+    max-width: 37.5rem;
+  }
+  .content {
+    border-start-end-radius: var(--spacing__100);
+    border-end-start-radius: 0;
+  }
+  img {
+    min-width: 18.75rem;
+    border-end-start-radius: var(--spacing__100);
+    border-start-end-radius: 0;
+  }
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing__100);
+  padding: var(--spacing__200) var(--spacing__400);
+  border-radius: var(--spacing__100);
+  background: var(--color__green500);
+  color: var(--color__white);
+  font-family: "Montserrat", system-ui, serif;
+  font-size: var(--fontsize__textpreset2);
+  font-weight: 700;
+}
+
+.button::before {
+  content: url(../public/images/icon-cart.svg);
+}
+
+.font-fraunces {
+  font-family: "Fraunces", serif;
+  font-weight: 700;
+}
+
+.font-montserrat {
+  font-family: "Montserrat", system-ui, sans-serif;
+}
+
+.color-black {
+  color: var(--color__black);
+}
+
+.color-grey {
+  color: var(--color__grey);
+}
+
+.color-green {
+  color: var(--color__green500);
+}
+
+.capitalise {
+  text-transform: uppercase;
+}
+
+.text-preset-1 {
+  font-size: var(--fontsize__textpreset1);
+}
+
+.text-preset-3 {
+  font-size: var(--fontsize__textpreset3);
+  font-weight: 500;
+}
+
+.text-preset-4 {
+  font-size: var(--fontsize__textpreset4);
+  font-weight: 500;
+}
+
+.text-preset-5 {
+  font-size: var(--fontsize__textpreset5);
+  font-weight: 500;
+}
+
+.line-heigth-1-6 {
+  line-height: 1.6;
+}
+
+.text-barre {
+  text-decoration: line-through;
 }
 
 /*# sourceMappingURL=style.css.map */
