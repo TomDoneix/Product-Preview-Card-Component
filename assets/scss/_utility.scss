@@ -1,0 +1,54 @@
+@use "composition.scss";
+
+
+.font-fraunces {
+  font-family: "Fraunces", serif;
+  font-weight: 700;
+}
+
+.font-montserrat {
+  font-family: "Montserrat", system-ui, sans-serif;
+}
+
+.color-black {
+  color: var(--color__black);
+}
+
+.color-grey {
+  color: var(--color__grey);
+}
+
+.color-green {
+  color: var(--color__green500);
+}
+
+.capitalise {
+  text-transform: uppercase;
+}
+
+.text-preset-1 {
+  font-size: var(--fontsize__textpreset1);
+}
+
+.text-preset-3 {
+  font-size: var(--fontsize__textpreset3);
+  font-weight: 500;
+}
+
+.text-preset-4 {
+  font-size: var(--fontsize__textpreset4);
+  font-weight: 500;
+}
+
+.text-preset-5 {
+  font-size: var(--fontsize__textpreset5);
+  font-weight: 500;
+}
+
+.line-heigth-1-6 {
+  line-height: 1.6;
+}
+
+.text-barre {
+  text-decoration: line-through;
+}
